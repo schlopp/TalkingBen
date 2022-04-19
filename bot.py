@@ -89,7 +89,7 @@ async def _eval(ctx: commands.Context, *, code: str) -> None:
         txtfile.seek(0)
         return await ctx.send(
             f"Executed in **{round(time_passed.total_seconds(), 3)}** seconds.",
-            file=discord.File(txtfile, "result.py"),
+            file=discord.File(txtfile, "result.py"),  # type: ignore
         )
 
     await ctx.send(
