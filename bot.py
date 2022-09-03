@@ -10,6 +10,7 @@ from datetime import datetime
 
 import discord  # type: ignore
 import toml
+import discord
 from discord.ext import commands  # type: ignore
 
 
@@ -19,8 +20,11 @@ async def _help(ctx: commands.Context):
     await ctx.send("https://tenor.com/view/talking-ben-talking-tom-ben-talking-ben-no-gif-25034220")
 
 
+intents = discord.Intents.default()
+intents.messages = True
+    
 
-bot = commands.Bot("tb ", owner_ids=[393305855929483264])
+bot = commands.Bot("tb ", intents=intents, owner_ids=[393305855929483264])
 
 
 bot.remove_command("help")
