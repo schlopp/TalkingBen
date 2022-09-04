@@ -44,10 +44,12 @@ async def on_ready():
 
 @bot.listen("on_typing")
 async def ben_response(channel: discord.TextChannel, user: discord.User, when: datetime):
-    if "talking-ben" in channel.name:
-        if not typing_guilds.get(channel.id) or typing_guilds[channel.id] < datetime.utcnow():
-            await channel.send("Ben?")
-        typing_guilds[channel.id] = when + timedelta(minutes=1)
+    async with channel.typing():
+        if "talking-ben" in channel.name:
+            if not typing_guilds.get(channel.id) or typing_guilds[channel.id] < datetime.utcnow():
+                await asyncio.sleep(1)
+                await channel.send("Ben?")
+            typing_guilds[channel.id] = when + timedelta(minutes=1)
 
 
 @bot.listen("on_message")
@@ -61,9 +63,11 @@ async def question_response(message: discord.Message) -> None:
     if message.author.bot:
         return
 
-    await message.channel.send(
-        random.choice(["Yeees?", "No.", "Ho ho ho!", "Eugh.."]), mention_author=False
-    )
+    async with message.channel.typing():
+        await asyncio.sleep(.5)
+        await message.channel.send(
+            random.choice(["Yeees?", "No.", "Ho ho ho!", "Eugh.."]), mention_author=False
+        )
 
 
 def clean_code(code: str):
