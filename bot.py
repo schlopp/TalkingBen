@@ -5,7 +5,7 @@ import asyncio
 import contextlib
 import traceback
 import re
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 import discord  # type: ignore
@@ -23,7 +23,10 @@ async def _help(ctx: commands.Context):
 
 intents = discord.Intents.default()
 intents.messages = True
-    
+
+
+typing_guilds: dict[int, datetime] = {}
+
 
 bot = commands.Bot("tb ", intents=intents, owner_ids=[393305855929483264])
 
@@ -37,8 +40,16 @@ async def on_ready():
     print("ready!")
 
 
+@bot.listen("on_typing")
+async def ben_response(channel: discord.TextChannel, user: discord.User, when: datetime):
+    if "talking-ben" in channel.name:
+        if typing_guilds.get(channel.id) and typing_guilds[channel.id] < datetime.now():
+            await channel.send("Ben?")
+        typing_guilds[channel.id] = when + timedelta(minutes=1)
+
+
 @bot.listen("on_message")
-async def ben_response(message: discord.Message) -> None:
+async def question_response(message: discord.Message) -> None:
     if not isinstance(message.channel, discord.TextChannel):
         return
     if not isinstance(message.channel.name, str):
