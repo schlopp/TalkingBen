@@ -46,8 +46,8 @@ async def on_ready():
 async def ben_response(channel: discord.TextChannel, user: discord.User, when: datetime):
     print(when.timetz)
     if "talking-ben" in channel.name and not user.bot:
-        async with channel.typing():
-            if not typing_guilds.get(channel.id) or typing_guilds[channel.id] < datetime.utcnow():
+        if not typing_guilds.get(channel.id) or typing_guilds[channel.id] < datetime.utcnow():
+            async with channel.typing():
                 await asyncio.sleep(1)
                 await channel.send("Ben?")
             typing_guilds[channel.id] = when + timedelta(minutes=1)
