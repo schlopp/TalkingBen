@@ -16,8 +16,9 @@ from discord.ext import commands  # type: ignore
 @commands.command(name="help")
 async def _help(ctx: commands.Context):
     await ctx.send("Create a channel named `talking-ben` to use me")
-    await ctx.send("https://tenor.com/view/talking-ben-talking-tom-ben-talking-ben-no-gif-25034220")
-
+    await ctx.send(
+        "https://tenor.com/view/talking-ben-talking-tom-ben-talking-ben-no-gif-25034220"
+    )
 
 
 bot = commands.Bot("tb ", owner_ids=[393305855929483264])
@@ -32,8 +33,8 @@ async def on_ready():
     print("ready!")
 
 
-@bot.listen()
-async def on_message(message: discord.Message) -> None:
+@bot.listen("on_message")
+async def ben_response(message: discord.Message) -> None:
     if not isinstance(message.channel, discord.TextChannel):
         return
     if not isinstance(message.channel.name, str):
@@ -104,12 +105,12 @@ async def status(ctx, *, informationthatineed):
     if not is_owner:
         return
     message = ctx.message
-    if informationthatineed == 'normal':
+    if informationthatineed == "normal":
         await bot.change_presence(activity=discord.Game(name=f"Yeees? - tb help"))
-        await message.add_reaction('👌')
+        await message.add_reaction("👌")
         return
     await bot.change_presence(activity=discord.Game(name=informationthatineed))
-    await message.add_reaction('👌')
+    await message.add_reaction("👌")
 
 
 config = toml.load("config.toml")
