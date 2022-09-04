@@ -45,7 +45,7 @@ async def on_ready():
 @bot.listen("on_typing")
 async def ben_response(channel: discord.TextChannel, user: discord.User, when: datetime):
     if "talking-ben" in channel.name:
-        if typing_guilds.get(channel.id) and typing_guilds[channel.id] < datetime.now():
+        if not typing_guilds.get(channel.id) or typing_guilds[channel.id] < datetime.now():
             await channel.send("Ben?")
         typing_guilds[channel.id] = when + timedelta(minutes=1)
 
