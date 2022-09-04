@@ -23,6 +23,7 @@ async def _help(ctx: commands.Context):
 
 intents = discord.Intents.default()
 intents.messages = True
+intents.typing = True
 
 
 typing_guilds: dict[int, datetime] = {}
