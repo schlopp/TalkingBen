@@ -44,8 +44,9 @@ async def on_ready():
 
 @bot.listen("on_typing")
 async def ben_response(channel: discord.TextChannel, user: discord.User, when: datetime):
-    async with channel.typing():
-        if "talking-ben" in channel.name:
+    print(when.timetz)
+    if "talking-ben" in channel.name and not user.bot:
+        async with channel.typing():
             if not typing_guilds.get(channel.id) or typing_guilds[channel.id] < datetime.utcnow():
                 await asyncio.sleep(1)
                 await channel.send("Ben?")
@@ -64,7 +65,6 @@ async def question_response(message: discord.Message) -> None:
         return
 
     async with message.channel.typing():
-        await asyncio.sleep(.5)
         await message.channel.send(
             random.choice(["Yeees?", "No.", "Ho ho ho!", "Eugh.."]), mention_author=False
         )
