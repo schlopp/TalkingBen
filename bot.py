@@ -65,7 +65,7 @@ async def question_response(message: discord.Message) -> None:
         return
 
     async with message.channel.typing():
-        await asyncio.sleep(.1)
+        await asyncio.sleep(.2)
     await message.channel.send(
         random.choice(["Yeees?", "No.", "Ho ho ho!", "Eugh.."]), mention_author=False
     )
