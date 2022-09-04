@@ -49,7 +49,7 @@ async def ben_response(channel: discord.TextChannel, user: discord.User, when: d
         if not typing_guilds.get(channel.id) or typing_guilds[channel.id] < datetime.utcnow():
             async with channel.typing():
                 await asyncio.sleep(1)
-                await channel.send("Ben?")
+            await channel.send("Ben?")
             typing_guilds[channel.id] = when + timedelta(minutes=1)
 
 
@@ -65,10 +65,10 @@ async def question_response(message: discord.Message) -> None:
         return
 
     async with message.channel.typing():
-        await asyncio.sleep(.5)
-        await message.channel.send(
-            random.choice(["Yeees?", "No.", "Ho ho ho!", "Eugh.."]), mention_author=False
-        )
+        await asyncio.sleep(.1)
+    await message.channel.send(
+        random.choice(["Yeees?", "No.", "Ho ho ho!", "Eugh.."]), mention_author=False
+    )
 
 
 def clean_code(code: str):
