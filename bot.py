@@ -6,6 +6,7 @@ import contextlib
 import traceback
 import re
 from datetime import datetime, timedelta
+from typing import Dict
 
 
 import discord  # type: ignore
@@ -26,7 +27,7 @@ intents.messages = True
 intents.typing = True
 
 
-typing_guilds: dict[int, datetime] = {}
+typing_guilds: Dict[int, datetime] = {}
 
 
 bot = commands.Bot("tb ", intents=intents, owner_ids=[393305855929483264])
